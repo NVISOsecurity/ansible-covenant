@@ -1,0 +1,26 @@
+- name: git clone Covenant
+  git:
+    repo: https://github.com/cobbr/Covenant.git
+    dest: "{{ covenant_dir }}"
+    update: no
+    force: yes
+    recursive: true
+  become: yes
+
+- name: build covenant image
+  docker_image:
+    name: covenant
+    build:
+      path: "{{ covenant_dir }}/Covenant"
+    source: build
+
+# docker run -it -p 7443:7443 -p 8080:80 -p 8443:443 --name covenant -v /var/covenant/Covenant/Data:/app/Data covenant
+- name: start Covenant container
+  docker_container:
+    name: covenant
+    image: covenant:latest
+    volumes: "{{ covenant_dir }}/Covenant/Data:/app/Data"
+    ports:
+      - "7443:7443"
+      - "8080:80"
+      - "8443:443"
