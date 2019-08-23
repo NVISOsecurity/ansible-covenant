@@ -12,9 +12,9 @@
     name: covenant
     build:
       path: "{{ covenant_dir }}/Covenant"
+      pull: yes
     source: build
 
-# docker run -it -p 7443:7443 -p 8080:80 -p 8443:443 --name covenant -v /var/covenant/Covenant/Data:/app/Data covenant
 - name: start Covenant container
   docker_container:
     name: covenant
