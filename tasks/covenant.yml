@@ -5,6 +5,7 @@
     update: no
     force: yes
     recursive: true
+    version: "{{ covenant_version }}"
   become: yes
 
 - name: build covenant image
